@@ -8,5 +8,6 @@ results/*
 *.user
 *.suo
 TestResults/
-/.nuget-cache/670c1461c29885f9aa22c281d8b7da90845b38e4$ps_api.nuget.org_v3_index.json
+/.nuget-cache
 /.nuget-packages
+.tmp
