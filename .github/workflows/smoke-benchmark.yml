@@ -11,5 +11,5 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
-      - run: dotnet restore SignalRThroughputBench.slnx --configfile NuGet.Config
+      - run: dotnet restore SignalRThroughputBench.slnx
       - run: dotnet build SignalRThroughputBench.slnx --no-restore -c Release
