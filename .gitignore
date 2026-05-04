@@ -1,6 +1,10 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
 /.dotnet-home
-/.vs/SignalRThroughputBench.slnx/v18
+bin/
+obj/
+.vs/
+.idea/
+results/*
+!results/.gitkeep
+*.user
+*.suo
+TestResults/
