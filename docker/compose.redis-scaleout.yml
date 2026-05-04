@@ -29,9 +29,8 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile.runner
-    working_dir: /workspace
     volumes:
-      - ../results:/workspace/results
+      - ../results:/app/results
     profiles: ["runner"]
     depends_on:
       - redis
