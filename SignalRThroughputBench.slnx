@@ -1,2 +1,10 @@
 <Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SignalRThroughputBench.Contracts/SignalRThroughputBench.Contracts.csproj" />
+    <Project Path="src/SignalRThroughputBench.Runner/SignalRThroughputBench.Runner.csproj" />
+    <Project Path="src/SignalRThroughputBench.Server/SignalRThroughputBench.Server.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SignalRThroughputBench.Tests/SignalRThroughputBench.Tests.csproj" />
+  </Folder>
 </Solution>

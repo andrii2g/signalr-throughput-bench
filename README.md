@@ -13,8 +13,8 @@ Docker Compose is the canonical repeatable environment for baseline and Redis sc
 ## Quick Start Local
 
 ```bash
-dotnet restore SignalRThroughputBench.sln --configfile NuGet.Config
-dotnet build SignalRThroughputBench.sln --no-restore
+dotnet restore SignalRThroughputBench.slnx --configfile NuGet.Config
+dotnet build SignalRThroughputBench.slnx --no-restore
 dotnet run --project src/SignalRThroughputBench.Server --configuration Release
 dotnet run --project src/SignalRThroughputBench.Runner --configuration Release -- run --server-url http://localhost:5080/bench --scenario echo --connections 10 --duration 5 --warmup 2 --payload-bytes 256 --protocol json --transport websocket
 ```
