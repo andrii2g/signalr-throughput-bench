@@ -12,12 +12,33 @@ Docker Compose is the canonical repeatable environment for baseline and Redis sc
 
 ## Quick Start Local
 
+Start the server in one terminal and keep it running:
+
 ```bash
-dotnet restore SignalRThroughputBench.slnx --configfile NuGet.Config
+dotnet restore SignalRThroughputBench.slnx
 dotnet build SignalRThroughputBench.slnx --no-restore
-dotnet run --project src/SignalRThroughputBench.Server --configuration Release
+ASPNETCORE_URLS=http://0.0.0.0:5080 dotnet run --project src/SignalRThroughputBench.Server --configuration Release --no-launch-profile
+```
+
+Verify the server is listening before starting the runner:
+
+```bash
+curl http://localhost:5080/health/ready
+```
+
+Expected response:
+
+```json
+{"status":"ready"}
+```
+
+Then run the benchmark from a second terminal:
+
+```bash
 dotnet run --project src/SignalRThroughputBench.Runner --configuration Release -- run --server-url http://localhost:5080/bench --scenario echo --connections 10 --duration 5 --warmup 2 --payload-bytes 256 --protocol json --transport websocket
 ```
+
+If you are running inside WSL or Linux, start both the server and the runner in the same environment.
 
 ## Quick Start Docker Baseline
 
