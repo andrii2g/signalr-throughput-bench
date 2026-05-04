@@ -1,0 +1,36 @@
+services:
+  redis:
+    image: redis:7
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+
+  signalr-server-1:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.server
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      SIGNALR_PROTOCOLS: json,messagepack
+      SIGNALR_BACKPLANE: redis
+      SIGNALR_REDIS_CONNECTION: redis:6379
+
+  signalr-server-2:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.server
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      SIGNALR_PROTOCOLS: json,messagepack
+      SIGNALR_BACKPLANE: redis
+      SIGNALR_REDIS_CONNECTION: redis:6379
+
+  benchmark-runner:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.runner
+    profiles: ["runner"]
+    depends_on:
+      - redis
+      - signalr-server-1
+      - signalr-server-2

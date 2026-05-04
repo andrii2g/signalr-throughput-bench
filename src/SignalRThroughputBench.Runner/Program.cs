@@ -1,3 +1,4 @@
+using SignalRThroughputBench.Runner;
 using SignalRThroughputBench.Runner.Cli;
 
 if (args.Length == 0)

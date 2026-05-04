@@ -5,8 +5,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\SignalRThroughputBench.Contracts\SignalRThroughputBench.Contracts.csproj" />
-    <ProjectReference Include="..\..\src\SignalRThroughputBench.Runner\SignalRThroughputBench.Runner.csproj" />
-    <ProjectReference Include="..\..\src\SignalRThroughputBench.Server\SignalRThroughputBench.Server.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,5 +17,18 @@
 
   <ItemGroup>
     <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\src\SignalRThroughputBench.Runner\Cli\RunCommand.cs" Link="Imported\RunCommand.cs" />
+    <Compile Include="..\..\src\SignalRThroughputBench.Runner\Load\ClientGroupPlanner.cs" Link="Imported\ClientGroupPlanner.cs" />
+    <Compile Include="..\..\src\SignalRThroughputBench.Runner\Load\PayloadFactory.cs" Link="Imported\PayloadFactory.cs" />
+    <Compile Include="..\..\src\SignalRThroughputBench.Runner\Metrics\LatencyHistogram.cs" Link="Imported\LatencyHistogram.cs" />
+    <Compile Include="..\..\src\SignalRThroughputBench.Runner\Metrics\RunMetrics.cs" Link="Imported\RunMetrics.cs" />
+    <Compile Include="..\..\src\SignalRThroughputBench.Runner\Metrics\ResourceSampler.cs" Link="Imported\ResourceSampler.cs" />
+    <Compile Include="..\..\src\SignalRThroughputBench.Runner\Options\Enums.cs" Link="Imported\Enums.cs" />
+    <Compile Include="..\..\src\SignalRThroughputBench.Runner\Options\RunnerOptions.cs" Link="Imported\RunnerOptions.cs" />
+    <Compile Include="..\..\src\SignalRThroughputBench.Runner\Reports\CsvReportWriter.cs" Link="Imported\CsvReportWriter.cs" />
+    <Compile Include="..\..\src\SignalRThroughputBench.Runner\Reports\ThresholdEvaluator.cs" Link="Imported\ThresholdEvaluator.cs" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,19 @@
+services:
+  signalr-server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.server
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      SIGNALR_PROTOCOLS: json,messagepack
+      SIGNALR_BACKPLANE: none
+    ports:
+      - "5080:8080"
+
+  benchmark-runner:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.runner
+    profiles: ["runner"]
+    depends_on:
+      - signalr-server
