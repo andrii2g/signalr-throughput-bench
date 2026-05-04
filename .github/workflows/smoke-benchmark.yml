@@ -1,0 +1,15 @@
+name: smoke-benchmark
+
+on:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - run: dotnet restore SignalRThroughputBench.sln --configfile NuGet.Config
+      - run: dotnet build SignalRThroughputBench.sln --no-restore -c Release

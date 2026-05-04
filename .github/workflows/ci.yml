@@ -1,0 +1,17 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - run: dotnet restore SignalRThroughputBench.sln --configfile NuGet.Config
+      - run: dotnet build SignalRThroughputBench.sln --no-restore -c Release
+      - run: dotnet test tests/SignalRThroughputBench.Tests/SignalRThroughputBench.Tests.csproj --no-build -c Release
