@@ -47,12 +47,20 @@ docker compose -f docker/compose.baseline.yml up --build -d signalr-server
 docker compose -f docker/compose.baseline.yml run --rm benchmark-runner run --server-url http://signalr-server:8080/bench --scenario echo --connections 10 --duration 5 --warmup 2 --protocol json --transport websocket
 ```
 
+The runner writes reports to the host `results/` directory. After the run completes, inspect the newest folder under:
+
+```bash
+ls results
+```
+
 ## Quick Start Redis Scale-out
 
 ```bash
 docker compose -f docker/compose.redis-scaleout.yml up --build -d
 docker compose -f docker/compose.redis-scaleout.yml run --rm benchmark-runner run --server-url http://signalr-server-1:8080/bench --scenario group-broadcast --connections 20 --groups 4 --duration 5 --warmup 2 --protocol messagepack --transport websocket
 ```
+
+Redis scale-out runs also persist reports into the host `results/` directory.
 
 ## Example Reports
 
