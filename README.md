@@ -62,6 +62,34 @@ docker compose -f docker/compose.redis-scaleout.yml run --rm benchmark-runner ru
 
 Redis scale-out runs also persist reports into the host `results/` directory.
 
+## Docker Cleanup
+
+Stop and remove the baseline containers and network:
+
+```bash
+docker compose -f docker/compose.baseline.yml down
+```
+
+Stop and remove the Redis scale-out containers and network:
+
+```bash
+docker compose -f docker/compose.redis-scaleout.yml down
+```
+
+If you also want to remove anonymous volumes created by the compose run:
+
+```bash
+docker compose -f docker/compose.baseline.yml down -v
+docker compose -f docker/compose.redis-scaleout.yml down -v
+```
+
+If you want to remove the built images too:
+
+```bash
+docker compose -f docker/compose.baseline.yml down --rmi local
+docker compose -f docker/compose.redis-scaleout.yml down --rmi local
+```
+
 ## Example Reports
 
 Each run writes:
