@@ -1,0 +1,10 @@
+{
+  "scenario": "echo",
+  "serverUrl": "http://localhost:5080/bench",
+  "connections": 100,
+  "durationSeconds": 30,
+  "warmupSeconds": 10,
+  "payloadBytes": 256,
+  "protocol": 0,
+  "transport": 1
+}

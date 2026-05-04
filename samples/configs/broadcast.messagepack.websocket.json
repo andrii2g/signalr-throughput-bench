@@ -1,0 +1,10 @@
+{
+  "scenario": "broadcast-all",
+  "serverUrl": "http://localhost:5080/bench",
+  "connections": 100,
+  "durationSeconds": 30,
+  "warmupSeconds": 10,
+  "payloadBytes": 256,
+  "protocol": 1,
+  "transport": 1
+}

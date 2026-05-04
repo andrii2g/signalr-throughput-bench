@@ -1,0 +1,11 @@
+{
+  "scenario": "group-broadcast",
+  "serverUrl": "http://signalr-server-1:8080/bench",
+  "connections": 200,
+  "durationSeconds": 30,
+  "warmupSeconds": 10,
+  "payloadBytes": 256,
+  "groups": 20,
+  "protocol": 1,
+  "transport": 1
+}
