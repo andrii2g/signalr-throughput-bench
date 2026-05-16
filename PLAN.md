@@ -133,7 +133,7 @@ Metrics:
 - total deliveries observed
 - missing deliveries
 - delivery rate per second
-- latency from server send timestamp to client receive timestamp
+- fan-out latency measured by the runner from the coordinator client send timestamp to each recipient client receive timestamp
 
 ### 4.3 Group broadcast
 
@@ -350,12 +350,6 @@ Create this structure:
       Program.cs
       Hubs/
         BenchHub.cs
-      Models/
-        EchoRequest.cs
-        EchoResponse.cs
-        BroadcastRequest.cs
-        GroupBroadcastRequest.cs
-        BenchPayload.cs
       Identity/
         QueryStringUserIdProvider.cs
       Metrics/
@@ -404,6 +398,7 @@ Create this structure:
         EchoResponse.cs
         BroadcastRequest.cs
         GroupBroadcastRequest.cs
+        TargetedUserRequest.cs
         BenchPayload.cs
       Reports/
         RunSummary.cs
@@ -457,7 +452,7 @@ Create this structure:
 
 ### 8.1 Contracts project
 
-Contains shared DTOs used by the server and runner.
+Contains all shared DTOs used by the server and runner. This project is the single source of truth for hub payload contracts.
 
 Rules:
 
@@ -465,6 +460,8 @@ Rules:
 - Keep DTOs serialization-friendly.
 - Do not put server logic in this project.
 - Do not put runner logic in this project.
+- Do not duplicate request, response, or payload DTOs inside the server or runner projects.
+- The server and runner must both reference `SignalRThroughputBench.Contracts` for hub method signatures.
 
 ### 8.2 Server project
 
@@ -691,9 +688,13 @@ Measurement starts after warmup and ends after the configured duration.
 Rules:
 
 - Use monotonic timing via `Stopwatch`.
-- Record client-side timestamps for every measured operation.
+- Record runner-side timestamps for every measured operation.
+- For request-response scenarios, latency is measured from the runner timestamp immediately before `InvokeAsync` or `SendAsync` starts to the runner timestamp immediately after the response or acknowledgement is observed.
+- For delivery scenarios, latency is measured inside the same runner process from the coordinator client timestamp immediately before the broadcast send call starts to each recipient client receive callback timestamp.
 - For delivery scenarios, use message ids to correlate sends and receives.
+- Do not compare server `Stopwatch` ticks with client or runner `Stopwatch` ticks.
 - Do not use wall clock time for latency calculations except for report metadata.
+- Distributed multi-runner latency is out of scope for v1 unless an explicit clock synchronization protocol is added later.
 
 ### 11.3 Cooldown
 
@@ -725,13 +726,24 @@ Payloads must be deterministic.
 public sealed record BenchPayload(
     string MessageId,
     int Sequence,
-    long CreatedAtStopwatchTicks,
+    long RunnerSendStartStopwatchTicks,
     int PayloadBytes,
     string Data);
 ```
 
+`TargetedUserRequest` fields:
+
+```csharp
+public sealed record TargetedUserRequest(
+    string UserId,
+    BenchPayload Payload);
+```
+
 Rules:
 
+- `RunnerSendStartStopwatchTicks` is created by the runner process, not by the server.
+- The value is valid only for measurements performed inside the same runner process that created it.
+- The server must treat this timestamp as opaque correlation metadata and must not use it for server-side elapsed-time calculations.
 - `Data` must be generated deterministically from payload size.
 - Use repeated ASCII characters for predictable payload size.
 - Payload size means approximate serialized payload body size, not exact wire size.

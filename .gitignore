@@ -11,3 +11,4 @@ TestResults/
 /.nuget-cache
 /.nuget-packages
 .tmp
+*.tmp
